@@ -10,8 +10,12 @@ class UserRegistrationForm(forms.Form):
         'invalid': 'فرمت شماره‌موبایل نادرست است. فرمت درست: +989123456789 یا 09123456789'
     })
     email = forms.EmailField(label='ایمیل', widget=forms.EmailInput(
-        attrs={'class': 'form-control eng'}))
+        attrs={'class': 'form-control eng'}), error_messages={
+            'invalid': 'ساختار ایمیل نادرست است.'
+    })
     password = forms.CharField(label='کلمه عبور', widget=forms.PasswordInput(
+        attrs={'class': 'form-control eng'}))
+    confirm_password = forms.CharField(label='تکرار کلمه عبور', widget=forms.PasswordInput(
         attrs={'class': 'form-control eng'}))
 
     def clean_email(self):
@@ -30,3 +34,10 @@ class UserRegistrationForm(forms.Form):
         if user:
             raise ValidationError('شماره‌موبایل تکراری است.')
         return username
+
+    def clean(self):
+        cd = super().clean()
+        password = cd.get('password')
+        confirm_password = cd.get('confirm_password')
+        if password and confirm_password and password != confirm_password:
+            raise ValidationError('کلمه عبور و تکرار آن با هم یکی نیستند!')
