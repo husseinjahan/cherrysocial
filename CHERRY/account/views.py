@@ -22,5 +22,5 @@ class RegisterView(View):
                 request, 'ثبت نام با موفقیت انجام شد.', extra_tags='success')
             return redirect('home:home')
         messages.error(
-            request, 'ابتدا اطلاعات را تکمیل نمایید.', extra_tags='danger')
+            request, 'ابتدا اطلاعات را به درستی تکمیل نمایید.', extra_tags='danger')
         return render(request, 'account/register.html', {'form': form})
