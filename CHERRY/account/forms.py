@@ -41,3 +41,12 @@ class UserRegistrationForm(forms.Form):
         confirm_password = cd.get('confirm_password')
         if password and confirm_password and password != confirm_password:
             raise ValidationError('کلمه عبور و تکرار آن با هم یکی نیستند!')
+
+
+class UserLoginForm(forms.Form):
+    username = PhoneNumberField(label='شماره‌موبایل',  widget=forms.TextInput(
+        attrs={'class': 'form-control eng'}), error_messages={
+        'invalid': 'فرمت شماره‌موبایل نادرست است. فرمت درست: +989123456789 یا 09123456789'
+    })
+    password = forms.CharField(label='کلمه عبور', widget=forms.PasswordInput(
+        attrs={'class': 'form-control eng'}))

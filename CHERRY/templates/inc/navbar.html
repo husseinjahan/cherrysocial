@@ -6,9 +6,25 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'home:home' %}">صفحه اصلی</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'account:user_register' %}">ثبت نام</a>
-                </li>
+                {% if not request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account:user_register' %}">ثبت نام</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account:user_login' %}">ورود</a>
+                    </li>
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account:user_logout' %}">خروج</a>
+                    </li>
+                    <li class="nav-item" style="color:white;">
+                        <a class="nav-link" href="#">
+                        {{ request.user.first_name }} {{ request.user.last_name }}
+                            
+                        </a>
+                    </li>
+                    {% endif %}
             </ul>
         </div>
     </div>
